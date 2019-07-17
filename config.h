@@ -1,11 +1,18 @@
 /* See LICENSE file for copyright and license details. */
+static char *openurlcmd[] = { "/bin/sh", "-c",
+    "xurls | dmenu -l 10 -w $WINDOWID | xargs -r open",
+    "EXTERNALPIPE", NULL };
+
+static char *edit_screen[] = { "/bin/sh", "-c",
+    "editscreen.sh",
+    "externalpipe", NULL };
 
 /*
  * appearance
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+char font[] = "Liberation Mono:pixelsize=10:antialias=true:autohint=true";
 int borderpx = 20;
 
 /*
@@ -82,45 +89,69 @@ char termname[] = "st-256color";
  */
 static unsigned int tabspaces = 8;
 
-/* Terminal colors (16 first used in escape sequence) */
+
+
+
+
+
+
+
+
+
+
 /* Terminal colors (16 first used in escape sequence) */
 const char *colorname[] = {
+
     /* 8 normal colors */
-    "#191719",
-      "#966161",
-        "#619668",
-          "#968461",
-            "#617f96",
-              "#ad708f",
-                "#618e96",
-                  "#585258",
+    [0] = "#303030", /* black   */
+    [1] = "#eb0003", /* red     */
+    [2] = "#2c939b", /* green   */
+    [3] = "#6095c5", /* yellow  */
+    [4] = "#6095c5", /* blue    */
+    [5] = "#6095c5", /* magenta */
+    [6] = "#2c939b", /* cyan    */
+    [7] = "#000000", /* white   */
 
-                    /* 8 bright colors */
-                    "gray50",
-                      "#ca9797",
-                        "#99bda6",
-                          "#bdac99",
-                            "#99a3bd",
-                              "#ca97bf",
-                                "#99b9bd",
-                                  "#857a85",
+    /* 8 bright colors */
+    [8]  = "#686868", /* black   */
+    [9]  = "#ffa7da", /* red     */
+    [10] = "#eb0003", /* green   */
+    [11] = "#efbd8b", /* yellow  */
+    [12] = "#98cbfe", /* blue    */
+    [13] = "#e5b0ff", /* magenta */
+    [14] = "#eb0003", /* cyan    */
+    [15] = "#011627", /* white   */
 
-                                    [255] = 0,
-
-                                      /* more colors can be added after 255 to use with DefaultXX */
-                                      "#000000",
-                                        "#ffffff",
+    /* special colors */
+    [256] = "#011627", /* background */
+    [257] = "#ffffff", /* foreground */
 };
-
 
 /*
  *  * Default colors (colorname index)
- *   * foreground, background, cursor, reverse cursor
+ *   * foreground, background, cursor
  *    */
-unsigned int defaultfg = 7;
-unsigned int defaultbg = 0;
-unsigned int defaultcs = 5;
-unsigned int defaultrcs = 5;
+unsigned int defaultfg = 257;
+unsigned int defaultbg = 256;
+unsigned int defaultcs = 257;
+
+
+
+
+
+
+
+
+unsigned int defaultrcs = 257;
+
+/*
+ *  * Colors used, when the specific fg == defaultfg. So in reverse mode this
+ *   * will reverse too. Another logic would only make the simple feature too
+ *    * complex.
+ *     */
+unsigned int defaultitalic = 7;
+unsigned int defaultunderline = 7;
+
 
 /*
  * Default shape of cursor
@@ -177,6 +208,7 @@ Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
+    { TERMMOD,              XK_N,           externalpipe,   {.v = edit_screen } },
 	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
