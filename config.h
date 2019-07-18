@@ -12,7 +12,7 @@ static char *edit_screen[] = { "/bin/sh", "-c",
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-char font[] = "Liberation Mono:pixelsize=10:antialias=true:autohint=true";
+char font[] = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 int borderpx = 20;
 
 /*
