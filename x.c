@@ -910,7 +910,6 @@ xinit(void)
 	if (xw.gm & YNegative)
 		xw.t += DisplayHeight(xw.dpy, xw.scr) - win.h - 2;
 
-	/* Events */
 	xw.attrs.background_pixel = dc.col[defaultbg].pixel;
 	xw.attrs.border_pixel = dc.col[defaultbg].pixel;
 	xw.attrs.bit_gravity = NorthWestGravity;
@@ -1755,6 +1754,9 @@ main(int argc, char *argv[])
 	case 't':
 	case 'T':
 		opt_title = EARGF(usage());
+		break;
+	case 'b':
+        colorname[256] = EARGF(usage());
 		break;
 	case 'w':
 		opt_embed = EARGF(usage());
